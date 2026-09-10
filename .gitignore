@@ -1,0 +1,5 @@
+private-import/
+*.pdf
+.env
+.env.*
+.DS_Store
