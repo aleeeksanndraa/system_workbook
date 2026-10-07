@@ -1,0 +1,10 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+const [input,userId]=process.argv.slice(2);
+if(!input||!/^\w{8}-\w{4}-\w{4}-\w{4}-\w{12}$/.test(userId||''))throw new Error('Usage: node scripts/prepare-course-import.js private-import/reviewed.json USER_UUID');
+const books=JSON.parse(await readFile(input,'utf8'));
+if(!Array.isArray(books)||books.length!==4||books.some(b=>!b.slug||!b.sections?.length))throw new Error('Expected four reviewed workbooks');
+const payload=JSON.stringify(books);if(payload.includes('$payload$'))throw new Error('Unsafe SQL delimiter in source');
+const template=await readFile(new URL('./course-import.template.sql',import.meta.url),'utf8');
+await mkdir('private-import',{recursive:true});
+await writeFile('private-import/import.sql',template.replace('__PRIVATE_PAYLOAD__',payload).replace('__TARGET_USER_ID__',userId));
+console.log('Prepared private-import/import.sql. Review and run in the authenticated project SQL editor.');
