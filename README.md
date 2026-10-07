@@ -29,8 +29,8 @@ The OpenAI secret key is never placed in GitHub Pages.
 Read `DEPLOY.md` for setup.
 ## Course update (2026-10-07)
 
-The canonical course order is defined in `course-order.js`. Additional existing
-materials follow the eleven course workbooks. Workbook slugs and IDs are retained.
+The canonical course order is defined in `course-order.js`. The library contains 26 course materials in the user-defined order. Additional
+materials follow these 26 entries. Workbook slugs and IDs are retained.
 The private Supabase import restores the source text for workbooks 8–11 across
 4 / 9 / 9 / 7 sections. Color perception is reference material; its nine writing
 fields are explicitly site notes, not questions attributed to the course author.
@@ -76,3 +76,25 @@ allowlist. Private imports, tests, and SQL never enter the deployed artifact.
 The save queue serializes updates, flushes on section/navigation/summary actions,
 retains failed writes for retry, and warns before closing with unsaved edits.
 Failed edits remain in memory until retried; there is no offline database.
+
+
+### Materials 13–26
+
+The private, source-reviewed extension adds 79 sections and 121 empty answer fields.
+Workbook tasks are adapted from supplied PDFs; guides/checklists are read-only
+reference sections. No user answers, summaries, or AI memories are generated.
+The frontend identifies reference materials and disables summary actions until
+answers exist. Existing workbook/section/question IDs and content remain intact.
+
+Prepare the reviewed private payload with:
+
+```
+node scripts/prepare-course-extension.js private-import/workbooks-13-26.json USER_UUID
+```
+
+The extension checks the exact canonical order and rejects answer fields for
+reference materials. Its transaction is additive and repeatable using stable
+slugs/source keys; it asserts all existing course records, answers, summaries,
+and AI memory rows survive unchanged. Private JSON and generated SQL are ignored
+and excluded from the public build. The extension is applied explicitly to the
+existing account; it is not an automatic seed for new accounts.

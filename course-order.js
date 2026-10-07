@@ -3,12 +3,23 @@ export const COURSE_SLUGS = [
   'raspakovka-lichnosti', 'vizualnaya-ierarhiya', 'analiz-ca', 'foto-video',
   'analiz-konkurentov', 'tablica-osoznannosti', 'tipografika',
   'psihologiya-vnimaniya-triggeri', 'koloristika',
-  'psihologiya-vospriyatiya-cvetov', 'psihologiya-prodazh'
+  'psihologiya-vospriyatiya-cvetov', 'psihologiya-prodazh',
+  'kak-obshatsya-s-klientami', 'trening-prizyvov', 'o-chem-govorit-v-bloge',
+  'voronki-v-bloge', 'uprazhneniya-protiv-samozvanca', 'kompoziciya',
+  'instrumenty-formirovaniya-doveriya', 'kak-dizaynit-prodayushchie-storis',
+  'oshibki-montazha', 'formuly-storitellingov-i-progrevov', 'taym-menedzhment',
+  'uderzhanie-vnimaniya-v-stories', 'triggery-v-stories',
+  'kak-obuchit-neyronku-pisat-kontent', 'biblioteka-promtov'
 ];
 export function orderWorkbooks(workbooks) {
   const rank = w => { const i = COURSE_SLUGS.indexOf(w.slug); return i < 0 ? 1000 + (w.position || 0) : i; };
   return [...workbooks].sort((a,b) => rank(a)-rank(b)).map((w,i) => ({...w,position:i+1}));
 }
+export const REFERENCE_SLUGS = new Set([
+  'psihologiya-vospriyatiya-cvetov', 'kak-obshatsya-s-klientami',
+  'kak-dizaynit-prodayushchie-storis', 'oshibki-montazha', 'taym-menedzhment',
+  'kak-obuchit-neyronku-pisat-kontent', 'biblioteka-promtov'
+]);
 // Earlier seed functions created two copies of the same sections. Keep all rows
 // and IDs in the database; show old sections as an appendix only if answered.
 export function visibleSections(sections, questions, answers) {

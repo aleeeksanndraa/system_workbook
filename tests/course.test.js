@@ -4,7 +4,7 @@ import {COURSE_SLUGS,orderWorkbooks,visibleSections} from '../course-order.js';
 import {createSaveQueue} from '../save-queue.js';
 test('canonical order keeps stable IDs and additional materials',()=>{
  const input=[...COURSE_SLUGS].reverse().map((slug,i)=>({slug,id:slug,position:i}));input.push({slug:'extra',id:'extra',position:2});
- const result=orderWorkbooks(input);assert.deepEqual(result.slice(0,11).map(w=>w.slug),COURSE_SLUGS);assert.equal(result[11].slug,'extra');assert.ok(result.every(w=>w.id===w.slug));
+ const result=orderWorkbooks(input);assert.equal(COURSE_SLUGS.length,26);assert.equal(new Set(COURSE_SLUGS).size,26);assert.deepEqual(result.slice(0,26).map(w=>w.slug),COURSE_SLUGS);assert.equal(result[26].slug,'extra');assert.ok(result.every(w=>w.id===w.slug));
 });
 test('verified sections hide empty legacy copies, preserve answered legacy sections',()=>{
  const sections=[{id:'old',workbook_id:'w',position:1},{id:'current',workbook_id:'w',position:1,description:'Источник: source.pdf'},{id:'other',workbook_id:'other',position:1}];
